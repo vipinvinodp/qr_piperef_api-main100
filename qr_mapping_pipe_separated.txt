@@ -49,3 +49,53 @@ AV47|Please place in AV15, AV16 section in the kids' room|This item is used for 
 AV48|Please place in AV45 drawer in the garage|This item is used for cooking vegetables|Tool used by guests
 AV49|Please place in AV31, AV33 shelf in the study|This item is used for cooking vegetables|Tool used by Mumma and Dada
 AV50|Please place in AV12, AV19 box in the living room|This item is used for charging electronic devices|Tool used by whole family
+AV51|Please place in AV70, AV57 box in the master room|This item is used for storing documents|Tool used by kids
+AV52|Please place in AV31, AV33 shelf in the study|This item is used for storing documents|Tool used by Mumma and Dada
+AV53|Please place in AV38 rack in the store room|This item is used for creating mathematical objects|Tool used by whole family
+AV54|Please place in AV38 rack in the store room|This item is used for creating mathematical objects|Tool used by Dada
+AV55|Please place in AV20, AV22 box near entrance|This item is used for charging electronic devices|Tool used by Mumma and Dada
+AV56|Please place in AV70, AV57 box in the master room|This item is used for storing documents|Tool used by whole family
+AV57|Please place in AV12, AV19 box in the living room|This item is used for repairing pipe|Tool used by Athira
+AV58|Please place in AV45 drawer in the garage|This item is used for storing documents|Tool used by Vipin
+AV59|Please place in AV50 locker in the office|This item is used for organizing tools|Tool used by Dada
+AV60|Please place in AV12, AV19 box in the living room|This item is used for cooking vegetables|Tool used by whole family
+AV61|Please place in AV50 locker in the office|This item is used for cleaning surfaces|Tool used by kids
+AV62|Please place in AV12, AV19 box in the living room|This item is used for storing documents|Tool used in emergencies
+AV63|Please place in AV25 box in the kitchen|This item is used for charging electronic devices|Tool used by Athira
+AV64|Please place in AV31, AV33 shelf in the study|This item is used for storing documents|Tool used by guests
+AV65|Please place in AV15, AV16 section in the kids' room|This item is used for testing batteries|Tool used by Mumma
+AV66|Please place in AV50 locker in the office|This item is used for testing batteries|Tool used by guests
+AV67|Please place in AV31, AV33 shelf in the study|This item is used for testing batteries|Tool used in emergencies
+AV68|Please place in AV45 drawer in the garage|This item is used for organizing tools|Tool used by Dada
+AV69|Please place in AV31, AV33 shelf in the study|This item is used for cleaning surfaces|Tool used by Athira
+AV70|Please place in AV15, AV16 section in the kids' room|This item is used for monitoring air quality|Tool used by whole family
+AV71|Please place in AV15, AV16 section in the kids' room|This item is used for measuring water quality|Tool used by Mumma and Dada
+AV72|Please place in AV70, AV57 box in the master room|This item is used for storing documents|Tool used by Vipin
+AV73|Please place in AV45 drawer in the garage|This item is used for cleaning surfaces|Tool used by Athira
+AV74|Please place in AV15, AV16 section in the kids' room|This item is used for storing documents|Tool used by guests
+AV75|Please place in AV25 box in the kitchen|This item is used for organizing tools|Tool used by Athira
+AV76|Please place in AV25 box in the kitchen|This item is used for measuring water quality|Tool used by Athira
+AV77|Please place in AV38 rack in the store room|This item is used for charging electronic devices|Tool used by Dada
+AV78|Please place in AV50 locker in the office|This item is used for testing batteries|Tool used by kids
+AV79|Please place in AV17, AV23 box in the bedroom|This item is used for cleaning surfaces|Tool used by Athira
+AV80|Please place in AV25 box in the kitchen|This item is used for measuring water quality|Tool used by Athira
+AV81|Please place in AV25 box in the kitchen|This item is used for monitoring air quality|Tool used by guests
+AV82|Please place in AV15, AV16 section in the kids' room|This item is used for cooking vegetables|Tool used by guests
+AV83|Please place in AV20, AV22 box near entrance|This item is used for monitoring air quality|Tool used by Vipin
+AV84|Please place in AV31, AV33 shelf in the study|This item is used for cooking vegetables|Tool used by Mumma and Dada
+AV85|Please place in AV45 drawer in the garage|This item is used for creating mathematical objects|Shared tool
+AV86|Please place in AV17, AV23 box in the bedroom|This item is used for creating mathematical objects|Tool used by guests
+AV87|Please place in AV12, AV19 box in the living room|This item is used for creating mathematical objects|Tool used by Athira
+AV88|Please place in AV15, AV16 section in the kids' room|This item is used for charging electronic devices|Tool used by Mumma and Dada
+AV89|Please place in AV45 drawer in the garage|This item is used for organizing tools|Tool used by Dada
+AV90|Please place in AV50 locker in the office|This item is used for organizing tools|Tool used by guests
+AV91|Please place in AV38 rack in the store room|This item is used for cleaning surfaces|Tool used by kids
+AV92|Please place in AV17, AV23 box in the bedroom|This item is used for creating mathematical objects|Tool used by kids
+AV93|Please place in AV12, AV19 box in the living room|This item is used for measuring water quality|Tool used by guests
+AV94|Please place in AV12, AV19 box in the living room|This item is used for monitoring air quality|Tool used by whole family
+AV95|Please place in AV70, AV57 box in the master room|This item is used for cooking vegetables|Tool used by Mumma
+AV96|Please place in AV17, AV23 box in the bedroom|This item is used for monitoring air quality|Tool used by Vipin
+AV97|Please place in AV15, AV16 section in the kids' room|This item is used for monitoring air quality|Tool used by guests
+AV98|Please place in AV45 drawer in the garage|This item is used for testing batteries|Tool used in emergencies
+AV99|Please place in AV45 drawer in the garage|This item is used for storing documents|Tool used by kids
+AV100|Please place in AV45 drawer in the garage|This item is used for testing batteries|Tool used by Mumma
