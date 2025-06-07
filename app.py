@@ -58,17 +58,17 @@ def view_code(code):
 def generate_sheet():
     try:
         data_list = request.get_json().get("data", [])
-        cols, rows = 5, 10
-        qr_size = 200
+        cols, rows = 10, 10  # 100 QR codes in a 10x10 grid
+        qr_size = 150
         page_width = cols * qr_size
         page_height = rows * qr_size
         sheet = Image.new("RGB", (page_width, page_height), "white")
 
         logo = Image.open("doll.png")
-        logo_size = 100
+        logo_size = 60
         logo.thumbnail((logo_size, logo_size))
 
-        for idx, item in enumerate(data_list[:50]):
+        for idx, item in enumerate(data_list[:100]):
             code = item.get("X1", "AVX")
             qr_url = f"https://qr-piperef-api-main100.onrender.com/view/{code}"
 
