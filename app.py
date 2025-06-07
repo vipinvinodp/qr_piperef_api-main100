@@ -73,10 +73,14 @@ def generate_sheet():
             pdf.image(temp_img_path, x=x, y=y, w=qr_size, h=qr_size)
             os.remove(temp_img_path)
 
-        output = io.BytesIO()
-        pdf.output(output)
-        output.seek(0)
-        return send_file(output, download_name="qr_sheet.pdf", mimetype="application/pdf")
+        #output = io.BytesIO()
+        #pdf.output(output)
+        #output.seek(0)
+        #return send_file(output, download_name="qr_sheet.pdf", mimetype="application/pdf")
+temp_pdf_path = "qr_sheet_output.pdf"
+pdf.output(temp_pdf_path)
+
+return send_file(temp_pdf_path, as_attachment=True, download_name="qr_sheet.pdf", mimetype="application/pdf")
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
