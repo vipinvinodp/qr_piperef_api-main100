@@ -1,6 +1,7 @@
 from flask import Flask, request, send_file, jsonify, render_template_string
 import qrcode
 from PIL import Image
+from fpdf import FPDF
 import io
 import os
 
@@ -24,6 +25,61 @@ def load_qr_data(file_path="qr_mapping_pipe_separated.txt"):
                     "category": category
                 }
     return qr_data
+
+@app.route("/generate_sheet", methods=["POST"])
+def generate_sheet():
+    try:
+        data_list = request.get_json().get("data", [])
+        cols, rows = 10, 10
+        qr_size = 150
+        pdf = FPDF(orientation="P", unit="pt", format="A4")
+        pdf.add_page()
+
+        logo = Image.open("doll.png")
+        logo_size = 60
+        logo.thumbnail((logo_size, logo_size))
+
+        for idx, item in enumerate(data_list[:100]):
+            code = item.get("X1", "AVX")
+            qr_url = f"https://qr-piperef-api-main100.onrender.com/view/{code}"
+
+            qr = qrcode.QRCode(
+                version=2,
+                error_correction=qrcode.constants.ERROR_CORRECT_H,
+                box_size=2,
+                border=1
+            )
+            qr.add_data(qr_url)
+            qr.make(fit=True)
+            img_qr = qr.make_image(fill_color="black", back_color="white").convert("RGB")
+            img_qr = img_qr.resize((qr_size, qr_size))
+
+            # Add logo to center
+            pos = ((qr_size - logo_size) // 2, (qr_size - logo_size) // 2)
+            img_qr.paste(logo, pos, mask=logo if logo.mode == 'RGBA' else None)
+
+            x = (idx % cols) * qr_size
+            y = (idx // cols) * qr_size
+
+            # Save to bytes
+            img_byte = io.BytesIO()
+            img_qr.save(img_byte, format="PNG")
+            img_byte.seek(0)
+
+            # Write to temp image for PDF inclusion
+            temp_img_path = f"temp_qr_{idx}.png"
+            with open(temp_img_path, "wb") as f:
+                f.write(img_byte.read())
+            pdf.image(temp_img_path, x=x, y=y, w=qr_size, h=qr_size)
+            os.remove(temp_img_path)
+
+        output = io.BytesIO()
+        pdf.output(output)
+        output.seek(0)
+        return send_file(output, download_name="qr_sheet.pdf", mimetype="application/pdf")
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/view/<code>", methods=["GET"])
 def view_code(code):
@@ -53,50 +109,6 @@ def view_code(code):
     </html>
     """
     return render_template_string(html_template, **entry)
-
-@app.route("/generate_sheet", methods=["POST"])
-def generate_sheet():
-    try:
-        data_list = request.get_json().get("data", [])
-        cols, rows = 10, 10  # 100 QR codes in a 10x10 grid
-        qr_size = 150
-        page_width = cols * qr_size
-        page_height = rows * qr_size
-        sheet = Image.new("RGB", (page_width, page_height), "white")
-
-        logo = Image.open("doll.png")
-        logo_size = 60
-        logo.thumbnail((logo_size, logo_size))
-
-        for idx, item in enumerate(data_list[:100]):
-            code = item.get("X1", "AVX")
-            qr_url = f"https://qr-piperef-api-main100.onrender.com/view/{code}"
-
-            qr = qrcode.QRCode(
-                version=2,
-                error_correction=qrcode.constants.ERROR_CORRECT_H,
-                box_size=2,
-                border=1
-            )
-            qr.add_data(qr_url)
-            qr.make(fit=True)
-            img_qr = qr.make_image(fill_color="black", back_color="white").convert("RGB")
-            img_qr = img_qr.resize((qr_size, qr_size))
-
-            pos = ((qr_size - logo_size) // 2, (qr_size - logo_size) // 2)
-            img_qr.paste(logo, pos, mask=logo if logo.mode == 'RGBA' else None)
-
-            x = (idx % cols) * qr_size
-            y = (idx // cols) * qr_size
-            sheet.paste(img_qr, (x, y))
-
-        output = io.BytesIO()
-        sheet.save(output, format="PNG")
-        output.seek(0)
-        return send_file(output, mimetype="image/png")
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
