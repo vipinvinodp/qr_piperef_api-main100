@@ -54,33 +54,25 @@ def generate_sheet():
             img_qr = qr.make_image(fill_color="black", back_color="white").convert("RGB")
             img_qr = img_qr.resize((qr_size, qr_size))
 
-            # Add logo to center
             pos = ((qr_size - logo_size) // 2, (qr_size - logo_size) // 2)
             img_qr.paste(logo, pos, mask=logo if logo.mode == 'RGBA' else None)
 
             x = (idx % cols) * qr_size
             y = (idx // cols) * qr_size
 
-            # Save to bytes
             img_byte = io.BytesIO()
             img_qr.save(img_byte, format="PNG")
             img_byte.seek(0)
 
-            # Write to temp image for PDF inclusion
             temp_img_path = f"temp_qr_{idx}.png"
             with open(temp_img_path, "wb") as f:
                 f.write(img_byte.read())
             pdf.image(temp_img_path, x=x, y=y, w=qr_size, h=qr_size)
             os.remove(temp_img_path)
 
-        #output = io.BytesIO()
-        #pdf.output(output)
-        #output.seek(0)
-        #return send_file(output, download_name="qr_sheet.pdf", mimetype="application/pdf")
-temp_pdf_path = "qr_sheet_output.pdf"
-pdf.output(temp_pdf_path)
-
-return send_file(temp_pdf_path, as_attachment=True, download_name="qr_sheet.pdf", mimetype="application/pdf")
+        output_path = "qr_sheet_output.pdf"
+        pdf.output(output_path)
+        return send_file(output_path, as_attachment=True, download_name="qr_sheet.pdf", mimetype="application/pdf")
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
