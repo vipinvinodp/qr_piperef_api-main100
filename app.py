@@ -6,7 +6,6 @@ import os
 
 app = Flask(__name__)
 
-# Load QR reference data from pipe-separated file
 def load_qr_data(file_path="qr_mapping_pipe_separated.txt"):
     qr_data = {}
     if not os.path.exists(file_path):
@@ -68,7 +67,10 @@ def generate_sheet():
         logo_size = 60
         logo.thumbnail((logo_size, logo_size))
 
-        font = ImageFont.load_default()
+        try:
+            font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 16)
+        except:
+            font = ImageFont.load_default()
 
         for idx, item in enumerate(data_list[:100]):
             code = item.get("X1", "AVX")
@@ -93,7 +95,7 @@ def generate_sheet():
             bbox = draw.textbbox((0, 0), text, font=font)
             text_width, text_height = bbox[2] - bbox[0], bbox[3] - bbox[1]
             text_x = (qr_size - text_width) // 2
-            text_y = pos[1] + logo_size // 2 - text_height // 2
+            text_y = pos[1] + logo_size - text_height  # bottom align with logo bottom
             draw.text((text_x, text_y), text, font=font, fill="green")
 
             x = (idx % cols) * qr_size
