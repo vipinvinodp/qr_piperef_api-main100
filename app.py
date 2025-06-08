@@ -1,6 +1,6 @@
 from flask import Flask, request, send_file, jsonify, render_template_string
 import qrcode
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 import io
 import os
 
@@ -12,7 +12,7 @@ def load_qr_data(file_path="qr_mapping_pipe_separated.txt"):
     if not os.path.exists(file_path):
         return qr_data
     with open(file_path, "r", encoding="utf-8") as f:
-        lines = f.readlines()[1:]  # skip header
+        lines = f.readlines()[1:]
         for line in lines:
             parts = line.strip().split("|")
             if len(parts) == 4:
@@ -32,7 +32,7 @@ def view_code(code):
     if not entry:
         return f"<h3>No entry found for {code}</h3>", 404
 
-    html_template = """
+    html_template = '''
     <!DOCTYPE html>
     <html>
     <head>
@@ -51,14 +51,14 @@ def view_code(code):
         <div class="info"><span class="label">Category:</span> {{ category }}</div>
     </body>
     </html>
-    """
+    '''
     return render_template_string(html_template, **entry)
 
 @app.route("/generate_sheet", methods=["POST"])
 def generate_sheet():
     try:
         data_list = request.get_json().get("data", [])
-        cols, rows = 10, 10  # 100 QR codes in a 10x10 grid
+        cols, rows = 10, 10
         qr_size = 150
         page_width = cols * qr_size
         page_height = rows * qr_size
@@ -67,6 +67,8 @@ def generate_sheet():
         logo = Image.open("doll.png")
         logo_size = 60
         logo.thumbnail((logo_size, logo_size))
+
+        font = ImageFont.load_default()
 
         for idx, item in enumerate(data_list[:100]):
             code = item.get("X1", "AVX")
@@ -85,6 +87,14 @@ def generate_sheet():
 
             pos = ((qr_size - logo_size) // 2, (qr_size - logo_size) // 2)
             img_qr.paste(logo, pos, mask=logo if logo.mode == 'RGBA' else None)
+
+            draw = ImageDraw.Draw(img_qr)
+            text = code
+            bbox = draw.textbbox((0, 0), text, font=font)
+            text_width, text_height = bbox[2] - bbox[0], bbox[3] - bbox[1]
+            text_x = (qr_size - text_width) // 2
+            text_y = pos[1] + logo_size // 2 - text_height // 2
+            draw.text((text_x, text_y), text, font=font, fill="green")
 
             x = (idx % cols) * qr_size
             y = (idx // cols) * qr_size
