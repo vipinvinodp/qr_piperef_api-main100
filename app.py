@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 
 # Use your actual DB URL or set in Render as env variable
-DATABASE_URL = os.getenv("DATABASE_URL", "postgres://user:pass@host:port/dbname")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://qrmappinguser:VM0EIqWngW5BZMzNGb7D1ZnHXSYnmPkJ@dpg-d17dqe2dbo4c73fqu71g-a.oregon-postgres.render.com/qr_mapping_db_av1")
 
 def get_connection():
     return psycopg2.connect(DATABASE_URL, sslmode='require')
