@@ -1,11 +1,11 @@
-from flask import Flask, request, jsonify, render_template_string
+from flask import Flask, request, jsonify, render_template_string, redirect
 import psycopg2
 import os
 
 app = Flask(__name__)
 
-# Replace with your PostgreSQL connection URL or set as env variable in Render
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://qrmappinguser:VM0EIqWngW5BZMzNGb7D1ZnHXSYnmPkJ@dpg-d17dqe2dbo4c73fqu71g-a.oregon-postgres.render.com/qr_mapping_db_av1")
+# Use your actual DB URL or set in Render as env variable
+DATABASE_URL = os.getenv("DATABASE_URL", "postgres://user:pass@host:port/dbname")
 
 def get_connection():
     return psycopg2.connect(DATABASE_URL, sslmode='require')
@@ -44,6 +44,11 @@ def update_qr_details():
             conn.commit()
 
     return jsonify({'message': 'Details updated successfully'})
+
+# ✅ REDIRECT view/AV1 -> edit_qr?title=AV1
+@app.route('/view/<title>')
+def redirect_to_editor(title):
+    return redirect(f"/edit_qr?title={title}")
 
 @app.route('/edit_qr')
 def edit_qr():
@@ -104,7 +109,7 @@ def edit_qr():
                 });
             }
 
-            // Load title from query param and auto-fetch
+            // Auto-fetch if ?title=AV1 is in the URL
             window.onload = function() {
                 const params = new URLSearchParams(window.location.search);
                 const t = params.get("title");
@@ -117,7 +122,6 @@ def edit_qr():
     </body>
     </html>
     """)
-
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
